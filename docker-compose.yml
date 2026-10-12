@@ -1,0 +1,21 @@
+services:
+  reimburse-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reimburse-ai-app
+    ports:
+      - "0.0.0.0:8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DATABASE_PATH=/app/data/reimbursements.db
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      - reimburse-uploads:/app/backend/uploads
+      - reimburse-db:/app/data
+    restart: unless-stopped
+
+volumes:
+  reimburse-uploads:
+  reimburse-db:
